@@ -1,7 +1,6 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
 import jwt from 'jsonwebtoken';
-import { app } from "../app";
 
 let mongo: any;
 beforeAll(async () => {
@@ -17,6 +16,8 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
+  jest.clearAllMocks();
+
   const collections = await mongoose.connection.db.collections();
 
   for (let collection of collections) {
@@ -51,3 +52,5 @@ export const signin = () => {
   // return a string thats the cookie with the encoded data
   return [`express:sess=${base64}`];
 };
+
+jest.mock('../nats-wrapper');
