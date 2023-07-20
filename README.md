@@ -6,9 +6,9 @@ kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdf
 
 in hosts file => 127.0.0.1 ticketing.dev
 
-Usefull commands:
-
 skaffold dev
+
+Usefull commands:
 
 kubectl get secrets
 
@@ -16,6 +16,15 @@ kubectl get pods
 
 kubectl delete pod pod_id
 
+namespace => a set of objects
 kubectl get namespace
 
 kubectl get services -n namespace_name
+
+kubectl apply -f [deployment_name].yaml
+
+change code => build docker image => push docker image => update the pod
+update the pod => kubectl rollout restart deployment [deployment_name]
+
+kubctle get deployments
+
