@@ -4,7 +4,7 @@ import { json } from "body-parser"
 import cookieSession from "cookie-session"
 
 import { currentUser, errorHandler, NotFoundError } from "@firoozej/ticketingshared"
-import { createOrderRouter } from "./routes/new"
+import { newOrderRouter } from "./routes/new"
 import { showOrderRouter } from "./routes/show"
 import { indexOrderRouter } from "./routes/index"
 import { deleteOrderRouter } from "./routes/delete"
@@ -20,7 +20,7 @@ app.use(
 )
 app.use(currentUser);
 
-app.use(createOrderRouter);
+app.use(newOrderRouter);
 app.use(showOrderRouter);
 app.use(indexOrderRouter);
 app.use(deleteOrderRouter);

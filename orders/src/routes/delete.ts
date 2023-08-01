@@ -1,13 +1,34 @@
-import express, { Request, Response } from "express";
-import { validateRequest, requireAuth } from "@firoozej/ticketingshared";
+import express, { Request, Response } from 'express';
+import {
+  requireAuth,
+  NotFoundError,
+  NotAuthorizedError,
+} from '@firoozej/ticketingshared';
+import { Order, OrderStatus } from '../models/order';
 
 const router = express.Router();
 
 router.delete(
-  "/api/orders/:id",
+  '/api/orders/:orderId',
   requireAuth,
-  validateRequest,
-  async (req: Request, res: Response) => {}
+  async (req: Request, res: Response) => {
+    const { orderId } = req.params;
+
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      throw new NotFoundError();
+    }
+    if (order.userId !== req.currentUser!.id) {
+      throw new NotAuthorizedError();
+    }
+    order.status = OrderStatus.Cancelled;
+    await order.save();
+
+    // publishing an event saying this was cancelled!
+
+    res.status(204).send(order);
+  }
 );
 
 export { router as deleteOrderRouter };
