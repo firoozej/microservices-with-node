@@ -28,3 +28,7 @@ update the pod => kubectl rollout restart deployment [deployment_name]
 
 kubctle get deployments
 
+Usefull docker commmands:
+
+docker build -t image_tag .
+docker run -dp targetPort:port image_tag
